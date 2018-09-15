@@ -44,7 +44,7 @@ build:
    only:
      - dev
 
-docker-processors-azure-:
+docker-processors-azure:
     <<: *docker_script
     variables:
       CONTAINER_NAME: "processors-azure-vision"
