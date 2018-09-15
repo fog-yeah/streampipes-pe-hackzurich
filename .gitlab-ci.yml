@@ -41,8 +41,6 @@ build:
      - docker push $IMAGE_NAME/$CONTAINER_NAME:latest
      - docker push $HARBOR_IMAGE_NAME/$CONTAINER_NAME:$MVN_VERSION
      - docker push $HARBOR_IMAGE_NAME/$CONTAINER_NAME:latest
-   only:
-     - dev
 
 docker-processors-azure:
     <<: *docker_script
