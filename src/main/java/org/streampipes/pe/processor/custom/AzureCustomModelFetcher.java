@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-package org.streampipes.pe.processor.example;
+package org.streampipes.pe.processor.custom;
 
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
@@ -28,31 +28,27 @@ import org.streampipes.pe.processor.example.model.AzureResponse;
 
 import java.net.URI;
 
-public class AzureImageFetcher {
+public class AzureCustomModelFetcher {
 
   private byte[] imageBytes;
   private String apiKey;
 
-  public AzureImageFetcher(byte[] imageBytes, String apiKey) {
+  public AzureCustomModelFetcher(byte[] imageBytes, String apiKey) {
     this.imageBytes = imageBytes;
     this.apiKey = apiKey;
   }
 
-  public AzureResponse fetchResult() {
+  public AzureCustomModelResponse fetchResult() {
     HttpClient httpclient = HttpClients.createDefault();
 
     try
     {
-      URIBuilder builder = new URIBuilder("https://westus.api.cognitive.microsoft.com/vision/v1.0/analyze");
-
-      builder.setParameter("visualFeatures", "Categories,Tags,Description");
-      //builder.setParameter("details", "{string}");
-      builder.setParameter("language", "en");
+      URIBuilder builder = new URIBuilder("https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/9d630d16-dcc8-4e58-9276-2f93aba8a57c/image?iterationId=81d0a184-d621-4569-af0c-8c7858fa5a8a");
 
       URI uri = builder.build();
       HttpPost request = new HttpPost(uri);
       request.setHeader("Content-Type", "application/octet-stream");
-      request.setHeader("Ocp-Apim-Subscription-Key", this.apiKey);
+      request.setHeader("Prediction-Key", this.apiKey);
 
 
       // Request body
@@ -66,7 +62,7 @@ public class AzureImageFetcher {
       {
         String modelResponse = EntityUtils.toString(entity);
         System.out.println(modelResponse);
-        return new Gson().fromJson(modelResponse, AzureResponse.class);
+        return new Gson().fromJson(modelResponse, AzureCustomModelResponse.class);
       } else {
         return null;
       }
@@ -78,4 +74,6 @@ public class AzureImageFetcher {
 
     return null;
   }
+
+
 }

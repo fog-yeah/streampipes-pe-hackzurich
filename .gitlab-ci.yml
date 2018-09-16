@@ -20,7 +20,7 @@ build:
     - "echo $MVN_VERSION >> ./target/mvn_version"
   artifacts:
     paths:
-      - ./*/target/*.jar
+      - ./target/*.jar
       - ./target/mvn_version
     expire_in:  1 hour
   except:
