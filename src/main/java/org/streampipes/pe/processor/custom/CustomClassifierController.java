@@ -53,7 +53,7 @@ public class CustomClassifierController extends
                     .build())
             .requiredTextParameter(Labels.from(API_KEY, "API Key", ""))
             .requiredSingleValueSelection(Labels.from(MODEL_ID, "Model iteration", ""), Options
-                    .from("M1", "M5"))
+                    .from("M1", "M5", "M7"))
             .outputStrategy(OutputStrategies.fixed(
                     EpProperties.doubleEp(Labels.empty(), "score", "https://schema.org/score"),
                     EpProperties.stringEp(Labels.empty(), "category", "https://schema.org/category")

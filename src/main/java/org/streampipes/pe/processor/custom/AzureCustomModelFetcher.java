@@ -37,7 +37,9 @@ public class AzureCustomModelFetcher {
 
   private List<String> urls = Arrays.asList("https://southcentralus.api.cognitive.microsoft" +
           ".com/customvision/v2.0/Prediction/9d630d16-dcc8-4e58-9276-2f93aba8a57c/image?iterationId=81d0a184-d621-4569-af0c-8c7858fa5a8a",
-          "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/9d630d16-dcc8-4e58-9276-2f93aba8a57c/image?iterationId=1ff12bbb-11b2-468b-a2de-fbe69f6db577");
+          "https://southcentralus.api.cognitive.microsoft" +
+                  ".com/customvision/v2.0/Prediction/9d630d16-dcc8-4e58-9276-2f93aba8a57c/image?iterationId=1ff12bbb-11b2-468b-a2de-fbe69f6db577",
+          "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/9d630d16-dcc8-4e58-9276-2f93aba8a57c/image?iterationId=0b9c4edd-877b-41f3-a58a-1730864e985e");
 
   public AzureCustomModelFetcher(byte[] imageBytes, String apiKey, String selectedModel) {
     this.imageBytes = imageBytes;
@@ -52,6 +54,8 @@ public class AzureCustomModelFetcher {
 
     if (this.selectedModel.equals("M5")) {
       selectedUrl = urls.get(1);
+    } else if (this.selectedModel.equals("M7")) {
+      selectedUrl = urls.get(2);
     }
     try
     {
