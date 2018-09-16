@@ -32,6 +32,7 @@ public class CustomClassifier extends StandaloneEventProcessorEngine<CustomClass
   private String imageFieldName;
   private String apiKey;
   private ObjectMapper oMapper;
+  private String selectedModel;
 
   public CustomClassifier(CustomClassifierParameters params) {
     super(params);
@@ -44,6 +45,7 @@ public class CustomClassifier extends StandaloneEventProcessorEngine<CustomClass
     this.imageFieldName = params.getImageMapping();
     this.apiKey = params.getApiKey();
     this.oMapper = new ObjectMapper();
+    this.selectedModel = params.getSelectedModel();
 
   }
 
@@ -58,7 +60,8 @@ public class CustomClassifier extends StandaloneEventProcessorEngine<CustomClass
       e.printStackTrace();
     }
 
-    AzureCustomModelResponse response = new AzureCustomModelFetcher(imageBytes, apiKey).fetchResult();
+    AzureCustomModelResponse response = new AzureCustomModelFetcher(imageBytes, apiKey,
+            selectedModel).fetchResult();
 
     if (response != null) {
       response.setImage(imageBase64);

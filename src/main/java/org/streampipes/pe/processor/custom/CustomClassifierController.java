@@ -25,6 +25,7 @@ import org.streampipes.sdk.extractor.ProcessingElementParameterExtractor;
 import org.streampipes.sdk.helpers.EpProperties;
 import org.streampipes.sdk.helpers.EpRequirements;
 import org.streampipes.sdk.helpers.Labels;
+import org.streampipes.sdk.helpers.Options;
 import org.streampipes.sdk.helpers.OutputStrategies;
 import org.streampipes.sdk.helpers.SupportedFormats;
 import org.streampipes.sdk.helpers.SupportedProtocols;
@@ -36,6 +37,7 @@ public class CustomClassifierController extends
 
   private static final String IMAGE = "image";
   private static final String API_KEY = "api-key";
+  private static final String MODEL_ID = "model-id";
 
   @Override
   public DataProcessorDescription declareModel() {
@@ -50,6 +52,8 @@ public class CustomClassifierController extends
                             PropertyScope.NONE)
                     .build())
             .requiredTextParameter(Labels.from(API_KEY, "API Key", ""))
+            .requiredSingleValueSelection(Labels.from(MODEL_ID, "Model iteration", ""), Options
+                    .from("M1", "M5"))
             .outputStrategy(OutputStrategies.fixed(
                     EpProperties.doubleEp(Labels.empty(), "score", "https://schema.org/score"),
                     EpProperties.stringEp(Labels.empty(), "category", "https://schema.org/category")
@@ -67,8 +71,10 @@ public class CustomClassifierController extends
 
     String apiKey = extractor.singleValueParameter(API_KEY, String.class);
     String imageMapping = extractor.mappingPropertyValue(IMAGE);
+    String selectedModel = extractor.selectedSingleValue(MODEL_ID, String.class);
 
-    CustomClassifierParameters params = new CustomClassifierParameters(graph, apiKey, imageMapping);
+    CustomClassifierParameters params = new CustomClassifierParameters(graph, apiKey,
+            imageMapping, selectedModel);
 
     return new ConfiguredEventProcessor<>(params, () -> new CustomClassifier(params));
   }

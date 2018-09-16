@@ -24,26 +24,38 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.streampipes.pe.processor.example.model.AzureResponse;
 
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
 
 public class AzureCustomModelFetcher {
 
   private byte[] imageBytes;
   private String apiKey;
+  private String selectedModel;
 
-  public AzureCustomModelFetcher(byte[] imageBytes, String apiKey) {
+  private List<String> urls = Arrays.asList("https://southcentralus.api.cognitive.microsoft" +
+          ".com/customvision/v2.0/Prediction/9d630d16-dcc8-4e58-9276-2f93aba8a57c/image?iterationId=81d0a184-d621-4569-af0c-8c7858fa5a8a",
+          "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/9d630d16-dcc8-4e58-9276-2f93aba8a57c/image?iterationId=1ff12bbb-11b2-468b-a2de-fbe69f6db577");
+
+  public AzureCustomModelFetcher(byte[] imageBytes, String apiKey, String selectedModel) {
     this.imageBytes = imageBytes;
     this.apiKey = apiKey;
+    this.selectedModel = selectedModel;
   }
 
   public AzureCustomModelResponse fetchResult() {
     HttpClient httpclient = HttpClients.createDefault();
 
+    String selectedUrl = urls.get(0);
+
+    if (this.selectedModel.equals("M5")) {
+      selectedUrl = urls.get(1);
+    }
     try
     {
-      URIBuilder builder = new URIBuilder("https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/9d630d16-dcc8-4e58-9276-2f93aba8a57c/image?iterationId=81d0a184-d621-4569-af0c-8c7858fa5a8a");
+      URIBuilder builder = new URIBuilder(selectedUrl);
 
       URI uri = builder.build();
       HttpPost request = new HttpPost(uri);

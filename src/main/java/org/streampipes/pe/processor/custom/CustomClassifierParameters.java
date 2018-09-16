@@ -22,11 +22,14 @@ public class CustomClassifierParameters extends EventProcessorBindingParams {
 
   private String apiKey;
   private String imageMapping;
+  private String selectedModel;
 
-  public CustomClassifierParameters(DataProcessorInvocation graph, String apiKey, String imageMapping) {
+  public CustomClassifierParameters(DataProcessorInvocation graph, String apiKey, String
+          imageMapping, String selectedModel) {
     super(graph);
     this.apiKey = apiKey;
     this.imageMapping = imageMapping;
+    this.selectedModel = selectedModel;
   }
 
   public String getApiKey() {
@@ -35,5 +38,9 @@ public class CustomClassifierParameters extends EventProcessorBindingParams {
 
   public String getImageMapping() {
     return imageMapping;
+  }
+
+  public String getSelectedModel() {
+    return selectedModel;
   }
 }
