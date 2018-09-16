@@ -26,7 +26,7 @@ public class TestAzureCustomModelFetcher {
   public static void main(String[] args) {
     AzureCustomModelFetcher imageFetcher = null;
     try {
-      imageFetcher = new AzureCustomModelFetcher(extractBytes(), "");
+      imageFetcher = new AzureCustomModelFetcher(extractBytes(), "", "M1");
     } catch (IOException e) {
       e.printStackTrace();
     }
